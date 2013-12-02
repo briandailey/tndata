@@ -2,7 +2,7 @@ County,Population,Offenders
 Wilson,118961,22
 Blount,124177,103
 Shelby,940764,110
-Union,19127,
+Union,19127,1
 Humphreys,18275,88
 Montgomery,184468,23
 Wayne,16996,22
@@ -60,7 +60,7 @@ Fayette,38659,13
 Claiborne,31736,6
 Lincoln,33503,37
 Franklin,40772,43
-Dyer,38255,
+Dyer,38255,1
 Sumner,166123,34
 Marshall,30883,11
 Carroll,28390,74
@@ -85,12 +85,12 @@ Tipton,61705,46
 Benton,16361,61
 Pickett,5100,0
 Morgan,21931,25
-Unicoi,18235,
+Unicoi,18235,1
 Stewart,13297,14
 Houston,8413,0
 Fentress,17940,21
 Carter,57355,77
-Cocke,35571,
+Cocke,35571,1
 Lewis,11896,26
 Scott,22173,57
 Monroe,45133,126
