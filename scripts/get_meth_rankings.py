@@ -3,8 +3,9 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 
-offenders_regex = re.compile('^(\d*)')
-county_regex = re.compile('^([A-z ]+) County')
+offenders_regex = re.compile(r'^([\d*]+)')
+single_offender_regex = re.compile(r'^([One]+)')
+county_regex = re.compile(r'^([A-z ]+) County')
 
 def counties_list():
     """ read in list of counties from the text file. """
@@ -31,8 +32,11 @@ def meth_per_county(limit=None):
 
             matches = offenders_regex.match(offenders_dom.text)
             if not matches:
-                print "No regex match on {county}.".format(county=county)
-                print offenders_dom.text
+                if single_offender_regex.match(offenders_dom.text):
+                    csvwriter.writerow([county, population, 1])
+                else:
+                    print "No regex match on {county}".format(county=county)
+                    print offenders_dom.text
                 continue
 
             number_of_offenders = matches.group(0)
