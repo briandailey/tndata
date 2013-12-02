@@ -17,15 +17,12 @@ def counties_list():
     return counties
 
 def meth_per_county(limit=None):
-    url = 'https://apps.tn.gov/methor-app/search.do'
-
-    with open('../meth_per_county.csv', 'wb') as f: 
+    with open('../data/meth_per_county.csv', 'wb') as f:
         csvwriter = csv.writer(f)
+        # Write header
+        csvwriter.writerow(['County', 'Population', 'Offenders'])
         for county, population in counties_list().items():
-            payload = {'county': county.upper()}
-            r = requests.post(url, data=payload)
-            soup = BeautifulSoup(r.text)
-            offenders_dom = soup.find(attrs={"class": "pagebanner"})
+            offenders_dom = dom_from_county(county)
 
             if not offenders_dom:
                 print "Found no offenders text for {county}.".format(county=county)
@@ -44,3 +41,11 @@ def meth_per_county(limit=None):
 
             if limit:
                 break
+
+def dom_from_county(county, css_class="pagebanner"):
+    """Return dom from TN Meth offenders app"""
+    url = 'https://apps.tn.gov/methor-app/search.do'
+    payload = {'county': county.upper()}
+    r = requests.post(url, data=payload)
+    soup = BeautifulSoup(r.text)
+    return soup.find(attrs={"class": css_class})
