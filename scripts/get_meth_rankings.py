@@ -10,7 +10,7 @@ county_regex = re.compile(r'^([A-z ]+) County')
 def counties_list():
     """ read in list of counties from the text file. """
     counties = {}
-    with open('../data/PEP_2012_PEPANNRES_with_ann.csv') as f:
+    with open('../data/sources/PEP_2012_PEPANNRES_with_ann.csv') as f:
         csvreader = csv.DictReader(f)
         for row in csvreader:
             county = county_regex.match(row['GEO.display-label']).group(1)
@@ -18,7 +18,7 @@ def counties_list():
     return counties
 
 def meth_per_county(limit=None):
-    with open('../data/meth_per_county.csv', 'wb') as f:
+    with open('../data/derived/meth_per_county.csv', 'wb') as f:
         csvwriter = csv.writer(f)
         # Write header
         csvwriter.writerow(['County', 'Population', 'Offenders'])
@@ -53,3 +53,8 @@ def dom_from_county(county, css_class="pagebanner"):
     r = requests.post(url, data=payload)
     soup = BeautifulSoup(r.text)
     return soup.find(attrs={"class": css_class})
+
+if __name__ == "__main__":
+    print "Getting information on meth offenders..."
+    meth_per_county()
+    print "Done."
